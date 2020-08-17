@@ -1,0 +1,74 @@
+# Filename: my.kv
+
+WindowManager:
+    MainWindow:
+
+<MainWindow>:
+    name: "main"
+
+    FloatLayout:
+        Label:
+            id: greetingLabel
+            text: "" if app.greetingLabel is None else app.greetingLabel
+            font_size: 30
+            bold: "true"
+            pos: (- root.width/2 + 165), (root.height / 2) - 70
+            font_family: "Liberation Sans"
+        Label:
+            id: dateTimeLabel
+            text: "" if app.dateTimeLabel is None else app.dateTimeLabel
+            font_size: 25
+            pos: (root.width/2) - 180, (root.height / 2) - 60
+            font_family: "Liberation Sans"
+        Label:
+            id: time
+            text: "" if app.time is None else app.time
+            font_size: 35
+            pos: (root.width/2) - 150, (root.height / 2) - 105
+        Label:
+            id: todo
+            text: "" if app.todoList is None else app.todoList
+            font_size: 25
+            pos: (- root.width/2) + 170,-350
+        AsyncImage:
+            id: weather_icon
+            source: app.weather_icon
+            pos: (- root.width/2 + 80), (root.height / 2) - 120
+        Label:
+            id: temp
+            text: "" if app.temp is None else app.temp
+            font_size: 20
+            pos: (- root.width/2 + 160), (root.height / 2) - 120 
+        Label:
+            id: description
+            text: "" if app.description is None else app.description
+            font_size: 20
+            pos: (- root.width/2 + 130), (root.height / 2) - 162
+            font_family: "Liberation Sans"
+        Label:
+            id: headline
+            text: "Headlines"
+            font_size: 25
+            pos: -root.width/2 + 95, -root.height/2 + 320
+        BoxLayout:
+            orientation: "horizontal"
+            pos: 0,-575
+            AsyncImage:
+                id: news_icon
+                source: app.news_icon
+                size: 125, 125
+                size_hint_x: None
+            Label:
+                id: news_info
+                text: app.news_headlines
+                font_size: 18
+                text_size: root.width - 400, None
+                size: self.texture_size
+                size_hint_x: None
+        Label:
+            id: events
+            text: app.upcomingEvents
+            font_size: 17
+            pos: 300,-575
+                
+    

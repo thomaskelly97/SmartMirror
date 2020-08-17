@@ -1,0 +1,60 @@
+.App {
+  text-align: center;
+  background-color: #90e8a7;
+  height: 500px;
+  width: 500px;
+}
+
+.todo-app {
+  background-color: #90e8a7;
+  padding: 10px;
+  border-radius: 15px;
+  height: 500px;
+  width: 500px;
+}
+
+.App-header {
+  background-color: #90e8a7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.todo-list {
+  background-color: #90e8a7;
+  margin-left: 140px;
+}
+
+.list-element {
+  color: white;
+  text-align: left;
+  font-weight: bold;
+  padding-top: 5px;
+}
+
+h2 {
+  color: white;
+}
+
+.api-btn {
+  background-color: pink;
+  border-radius: 5px;
+  padding: 5px;
+  border-style: none;
+}
+
+.add-btn {
+  border-radius: 10px;
+  border-style: hidden;
+  width: 45px;
+  height: 30px;
+  margin-left: 15px;
+}
+
+.list-input {
+  height: 30px;
+}
