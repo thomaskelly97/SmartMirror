@@ -12,6 +12,7 @@ from kivy.core.window import Window
 from kivy.uix.label import Label
 from datetime import date, datetime
 import calendar
+import time
 from kivy.uix.widget import Widget
 from kivy.properties import StringProperty, ObjectProperty, ListProperty
 from datetime import timedelta
@@ -46,14 +47,24 @@ headers = {
     'x-rapidapi-key': weatherApiKey
     }
 
+# ---- Covid Api ----
+urlCovid = "https://covid-193.p.rapidapi.com/statistics"
+covidQuerystring = {"country":"Ireland"}
+covidHeaders = {
+    'x-rapidapi-host': "covid-193.p.rapidapi.com",
+    'x-rapidapi-key': covidApiKey
+    }
+
+
 
 
 def configure_greeting_message(hour):
-    if hour >= 6 and hour < 12:
+    print("LOOK HERE" + str(hour))
+    if hour >= 6 and hour <= 12:
         return "Good morning, " + user
-    if hour >= 12 and hour < 18:
+    if hour >= 12 and hour <= 18:
         return "Good afternoon, " + user
-    if hour >= 18 and hour < 21:
+    if hour >= 18 and hour <= 21:
         return "Good evening, " + user
     else:
         return "Good night, " + user
@@ -89,6 +100,10 @@ class MyMainApp(App):
     upcomingEvents = StringProperty("")
 
     todoList = StringProperty("")
+
+    covidData = StringProperty("")
+
+    google_cmd = StringProperty("")
     
     def build(self):
         # Update the clock every minute
@@ -99,12 +114,18 @@ class MyMainApp(App):
         self.get_headlines() # news
         self.get_calendar_events() # events
         self.read_todo_list() # todo list
+        self.get_covid_data() # covid data
+        self.clear_google_cmds()
         
         # --- Updates ---
         Clock.schedule_interval(self.get_weather_data, 7200) # every 2 hrs
         Clock.schedule_interval(self.get_headlines, 7200)
-        Clock.schedule_interval(self.get_calendar_events, 28800) # every 8 hrs
+        Clock.schedule_interval(self.get_calendar_events, 7200) # every 8 hrs
         Clock.schedule_interval(self.read_todo_list, 3600)
+        Clock.schedule_interval(self.get_covid_data, 7200)
+        Clock.schedule_interval(self.check_google_talks, 5)
+        Clock.schedule_interval(self.clear_google_cmds, 45)
+        
         
         kv = Builder.load_file("main.kv")
         return kv
@@ -139,8 +160,39 @@ class MyMainApp(App):
         readFile = f.read()
         self.todoList = "• Todo •\n" + readFile.replace(",", "\n")
         os.chdir("/home/pi")
-    
+
+    def get_covid_data(self, *args):
+        response = requests.request("GET", urlCovid, headers=covidHeaders, params=covidQuerystring)
+        data = response.json()
+        if data["response"][0]["deaths"]["new"] == None:
+            newDeaths = "0"
+        else:
+            newDeaths = str(data["response"][0]["deaths"]["new"])
+
+        if data["response"][0]["cases"]["new"] == None:
+            newCases = "0"
+        else:
+            newCases = data["response"][0]["cases"]["new"]
+        self.covidData = "COVID-19 Updates\n" + newCases + " new cases\n" + newDeaths + " new deaths\n"
+        print(self.covidData)
+
+    def clear_google_cmds(self, *args):
+        self.google_cmd = ""
+        file = open("/home/pi/google_talks.txt", "r+")
+        file.truncate(0)
+        file.close()
+        
+    def check_google_talks(self, *args):
+        file = open("/home/pi/google_talks.txt", "r+")
+        hold_read = file.read()
+        if hold_read != self.google_cmd:
+            self.google_cmd = hold_read
+        file.close()
+            
+            
+        
     def get_calendar_events(self, *args):
+        self.upcomingEvents = ""
         creds = None
         # The file token.pickle stores the user's access and refresh tokens, and is
         # created automatically when the authorization flow completes for the first
@@ -148,7 +200,7 @@ class MyMainApp(App):
         if os.path.exists('token.pickle'):
             with open('token.pickle', 'rb') as token:
                 creds = pickle.load(token)
-        # If there are no (valid) credentials available, let the user log in.
+        # If there are no (valid) credentials availabCOVID-19 Updates\nle, let the user log in.
         if not creds or not creds.valid:
             if creds and creds.expired and creds.refresh_token:
                 creds.refresh(Request())
@@ -173,7 +225,12 @@ class MyMainApp(App):
             print('No upcoming events found.')
         for event in events:
             start = event['start'].get('dateTime', event['start'].get('date'))
-            start_str = datetime.strptime(start[0:19], "%Y-%m-%dT%H:%M:%S")
+            print("start " + str(start))
+            if len(start) < 18:
+                start_str = datetime.strptime(start[0:19], "%Y-%m-%d")
+            else:   
+                start_str = datetime.strptime(start[0:19], "%Y-%m-%dT%H:%M:%S")
+            print("start_str" + str(start_str))
             self.upcomingEvents = self.upcomingEvents + str(start_str.strftime("%b %d %H:%M")) + " • " + event['summary'] + "\n"
         
         
