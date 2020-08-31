@@ -29,7 +29,7 @@ WindowManager:
             id: todo
             text: "" if app.todoList is None else app.todoList
             font_size: 22
-            pos: (- root.width/2) + 210,-350
+            pos: (- root.width/2) + 210,-300
         AsyncImage:
             id: weather_icon
             source: app.weather_icon
@@ -49,10 +49,10 @@ WindowManager:
             id: headline
             text: "Headlines"
             font_size: 25
-            pos: -root.width/2 + 125, -root.height/2 + 335
+            pos: -root.width/2 + 125, -root.height/2 + 285
         BoxLayout:
             orientation: "horizontal"
-            pos: 30,-575
+            pos: 30,-525
             AsyncImage:
                 id: news_icon
                 source: app.news_icon
@@ -69,7 +69,7 @@ WindowManager:
             id: events
             text: app.upcomingEvents
             font_size: 15
-            pos: 250,-575
+            pos: 250,-525
         Label:
             id: covid
             text: "" if app.covidData is None else app.covidData

@@ -66,7 +66,7 @@ def configure_greeting_message(hour):
         return "Good afternoon, " + user
     if hour >= 18 and hour <= 21:
         return "Good evening, " + user
-    else:
+    if hour >= 21 or hour <= 24:
         return "Good night, " + user
 
 hour = str(datetime.now())[11:13].strip()
