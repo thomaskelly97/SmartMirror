@@ -8,6 +8,14 @@ WindowManager:
 
     FloatLayout:
         Label:
+            id: errorLabel
+            text: "" if app.weather_error is None else app.weather_error
+            font_size: 30
+            bold: "true"
+            color: 1,0,0,1
+            pos: 0, 0
+            font_family: "Liberation Sans"
+        Label:
             id: greetingLabel
             text: "" if app.greetingLabel is None else app.greetingLabel
             font_size: 30
@@ -29,27 +37,57 @@ WindowManager:
             id: todo
             text: "" if app.todoList is None else app.todoList
             font_size: 22
-            pos: (- root.width/2) + 210,-300
+            pos: (- root.width/2) + 220,-300
         AsyncImage:
-            id: weather_icon
-            source: app.weather_icon
-            pos: (- root.width/2 + 120), (root.height / 2) - 150
+            id: weather_icon1
+            source: app.weather_icon1
+            pos: (- root.width/2 + 120), (root.height / 2) - 180
+        AsyncImage:
+            id: weather_icon2
+            source: app.weather_icon2
+            pos: (- root.width/2 + 200), (root.height / 2) - 180
+        AsyncImage:
+            id: weather_icon3
+            source: app.weather_icon3
+            pos: (- root.width/2 + 280), (root.height / 2) - 180
         Label:
-            id: temp
-            text: "" if app.temp is None else app.temp
+            id: weather_time1
+            text: "" if app.weather_time1 is None else app.weather_time1
             font_size: 20
-            pos: (- root.width/2 + 220), (root.height / 2) - 150 
+            pos: (- root.width/2 + 110), (root.height / 2) - 130
         Label:
-            id: description
-            text: "" if app.description is None else app.description
+            id: weather_time2
+            text: "" if app.weather_time2 is None else app.weather_time2
             font_size: 20
-            pos: (- root.width/2 + 190), (root.height / 2) - 192
+            pos: (- root.width/2 + 190), (root.height / 2) - 130
+        Label:
+            id: weather_time3
+            text: "" if app.weather_time3 is None else app.weather_time3
+            font_size: 20
+            pos: (- root.width/2 + 270), (root.height / 2) - 130 
+        Label:
+            id: description1
+            text: "" if app.description1 is None else app.description1
+            font_size: 20
+            pos: (- root.width/2 + 120), (root.height / 2) - 235
+            font_family: "Liberation Sans"
+        Label:
+            id: description2
+            text: "" if app.description2 is None else app.description2
+            font_size: 20
+            pos: (- root.width/2 + 200), (root.height / 2) - 235
+            font_family: "Liberation Sans"
+        Label:
+            id: description3
+            text: "" if app.description3 is None else app.description3
+            font_size: 20
+            pos: (- root.width/2 + 280), (root.height / 2) - 235
             font_family: "Liberation Sans"
         Label:
             id: headline
             text: "Headlines"
             font_size: 25
-            pos: -root.width/2 + 125, -root.height/2 + 285
+            pos: -root.width/2 + 125, -root.height/2 + 380
         BoxLayout:
             orientation: "horizontal"
             pos: 30,-525
