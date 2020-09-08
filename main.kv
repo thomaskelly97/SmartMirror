@@ -16,6 +16,23 @@ WindowManager:
             pos: 0, 0
             font_family: "Liberation Sans"
         Label:
+            id: tomorrow
+            text: "Tomorrow"
+            font_size: 24
+            bold: "true"
+            pos: (- root.width/2 + 145), (root.height / 2) - 310
+            font_family: "Liberation Sans"
+        Label:
+            id: tomorrowWeatherInfo
+            text: "" if app.tomorrow_info is None else app.tomorrow_info
+            font_size: 20
+            pos: (- root.width/2 + 160), (root.height / 2) - 360
+            font_family: "Liberation Sans"
+        AsyncImage:
+            id: tomorrow_weather_icon
+            source: app.tomorrow_image
+            pos: (- root.width/2 + 270), (root.height / 2) - 330
+        Label:
             id: greetingLabel
             text: "" if app.greetingLabel is None else app.greetingLabel
             font_size: 30

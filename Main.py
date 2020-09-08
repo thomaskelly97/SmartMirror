@@ -55,9 +55,6 @@ covidHeaders = {
     'x-rapidapi-key': covidApiKey
     }
 
-
-
-
 def configure_greeting_message(hour):
     if hour >= 6 and hour <= 12:
         return "Good morning, " + user
@@ -68,11 +65,11 @@ def configure_greeting_message(hour):
     if hour >= 21 or hour <= 24:
         return "Good night, " + user
 
+    
 hour = str(datetime.now())[11:13].strip()
 
 class MainWindow(Screen):
     pass
-
 
 class WindowManager(ScreenManager):
     pass
@@ -113,6 +110,9 @@ class MyMainApp(App):
     google_cmd = StringProperty("")
 
     weather_error = StringProperty("")
+
+    tomorrow_image = StringProperty("")
+    tomorrow_info = StringProperty("")
     
     def build(self):
         # Update the clock every minute
@@ -127,20 +127,23 @@ class MyMainApp(App):
         self.clear_google_cmds()
         
         # --- Updates ---
+        Clock.schedule_interval(self.update_date_time_stuff, 5)
         Clock.schedule_interval(self.get_weather_data, 7200) # every 2 hrs
         Clock.schedule_interval(self.get_headlines, 7200)
         Clock.schedule_interval(self.get_calendar_events, 7200) # every 8 hrs
-        Clock.schedule_interval(self.read_todo_list, 3600)
+        Clock.schedule_interval(self.read_todo_list, 30)
         Clock.schedule_interval(self.get_covid_data, 7200)
         Clock.schedule_interval(self.check_google_talks, 5)
         Clock.schedule_interval(self.clear_google_cmds, 45)
-        
-        
         kv = Builder.load_file("main.kv")
         return kv
     
     def update_clock(self, *args):
         self.time = datetime.now().strftime("%-I:%M %p")
+
+    def update_date_time_stuff(self, *args):
+        greetMsg = str(configure_greeting_message(int(hour)))
+        dateTimeMessage = str(calendar.day_name[today.weekday()]) + ", " + str(today.strftime("%B")) + " " + str(today.day)
 
     def get_weather_data(self, *args):
         try:
@@ -175,6 +178,25 @@ class MyMainApp(App):
             self.weather_icon3 = "http://openweathermap.org/img/wn/%s@2x.png"%icon3
 
             self.weather_error = ""
+
+            # Setup Tomorrow Section
+            todayDate = data["list"][0]["dt_txt"][0:10]
+            nextTimeReading = data["list"][0]["dt_txt"][11:19]
+            if nextTimeReading == "00:00:00":
+                # "the next entry is 'tomorrow', so take the first entry as being tomorrow"
+                self.tomorrow_info = str(round(data["list"][0]["main"]["temp"] - 273.15, 2)) + " C" + "\n" + data["list"][0]["weather"][0]["description"]
+                self.tomorrow_image = "http://openweathermap.org/img/wn/%s@2x.png"%(data["list"][0]["weather"][0]["icon"])
+            else: # we need to loop through entries to find tomorrow! 
+                for x in data["list"]:
+                    print("date: " + x["dt_txt"])
+                    print("time: >" + str(x["dt_txt"][11:19]) + "< \n ==")
+                    if todayDate != x["dt_txt"][0:10] and str(x["dt_txt"][11:19]) == "12:00:00":
+                        print("We found tomorrow's date" + x["dt_txt"])
+                        self.tomorrow_info = str(round(x["main"]["temp"] - 273.15, 2)) + " C" + "\n" + x["weather"][0]["description"]
+                        self.tomorrow_image = "http://openweathermap.org/img/wn/%s@2x.png"%(x["weather"][0]["icon"])
+                        print("2moro " + self.tomorrow_info + " " + self.tomorrow_image)
+                        break
+
         except:
             self.weather_error = "There was an error connecting to the weather API service."
 
