@@ -8,4 +8,5 @@ The Pi is also configured to run Google Assistant functionality, installed at /h
 
 Use ./run.sh to run the application, provided it is installed under the correct directory path.
 
-![Left Image](https://github.com/thomaskelly97/SmartMirror/resources/mirror_left.jpg)
+![](https://github.com/thomaskelly97/SmartMirror/blob/master/resources/mirror_left.jpg)
+
