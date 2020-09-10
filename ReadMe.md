@@ -1,4 +1,4 @@
-# Smart Mirror Application 
+# Smart Mirror Application
 
 Smart Mirror software designed for raspberry pi utilising a variety of APIs to display news, weather, calendar, todo list & covid information.
 
@@ -8,3 +8,4 @@ The Pi is also configured to run Google Assistant functionality, installed at /h
 
 Use ./run.sh to run the application, provided it is installed under the correct directory path.
 
+![Left Image](https://github.com/thomaskelly97/SmartMirror/resources/mirror_left.jpg)
