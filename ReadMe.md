@@ -10,3 +10,5 @@ Use ./run.sh to run the application, provided it is installed under the correct 
 
 ![](https://github.com/thomaskelly97/SmartMirror/blob/master/resources/mirror_left.jpg)
 
+![](https://github.com/thomaskelly97/SmartMirror/blob/master/resources/mirror_right.jpg)
+
