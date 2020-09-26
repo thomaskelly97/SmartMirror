@@ -1,4 +1,4 @@
-# Smart Mirror Application
+# Smart Mirror Application & Home Web Server
 
 Smart Mirror software designed for raspberry pi utilising a variety of APIs to display news, weather, calendar, todo list & covid-19 information.
 
