@@ -7,12 +7,10 @@ import "./StatTracker.css";
 const Menter = ({ value, setValue, units, label }) => {
   const handleIncrement = (event) => {
     event.preventDefault();
-    console.log(`Dist is: ${value}\n We want to increment it to ${value + 1}`);
     setValue(value + 1);
   };
   const handleDecrement = (event) => {
     event.preventDefault();
-    console.log(`Dist is: ${value}\n We want to decrement it to ${value - 1}`);
     setValue(value - 1);
   };
   return (

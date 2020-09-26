@@ -249,45 +249,47 @@ class MyMainApp(App):
             
         
     def get_calendar_events(self, *args):
-        self.upcomingEvents = ""
-        creds = None
-        # The file token.pickle stores the user's access and refresh tokens, and is
-        # created automatically when the authorization flow completes for the first
-        # time.
-        if os.path.exists('token.pickle'):
-            with open('token.pickle', 'rb') as token:
-                creds = pickle.load(token)
-        # If there are no (valid) credentials availabCOVID-19 Updates\nle, let the user log in.
-        if not creds or not creds.valid:
-            if creds and creds.expired and creds.refresh_token:
-                creds.refresh(Request())
-            else:
-                flow = InstalledAppFlow.from_client_secrets_file(
-                    '/home/pi/Development/SmartMirror/credentials.json', SCOPES)
-                creds = flow.run_local_server(port=0)
-            # Save the credentials for the next run
-            with open('token.pickle', 'wb') as token:
-                pickle.dump(creds, token)
+        try:
+            self.upcomingEvents = ""
+            creds = None
+            # The file token.pickle stores the user's access and refresh tokens, and is
+            # created automatically when the authorization flow completes for the first
+            # time.
+            if os.path.exists('token.pickle'):
+                with open('token.pickle', 'rb') as token:
+                    creds = pickle.load(token)
+            # If there are no (valid) credentials availabCOVID-19 Updates\nle, let the user log in.
+            if not creds or not creds.valid:
+                if creds and creds.expired and creds.refresh_token:
+                    creds.refresh(Request())
+                else:
+                    flow = InstalledAppFlow.from_client_secrets_file(
+                        '/home/pi/Development/SmartMirror/credentials.json', SCOPES)
+                    creds = flow.run_local_server(port=0)
+                # Save the credentials for the next run
+                with open('token.pickle', 'wb') as token:
+                    pickle.dump(creds, token)
 
-        service = build('calendar', 'v3', credentials=creds)
+            service = build('calendar', 'v3', credentials=creds)
 
-        # Call the Calendar API
-        now = datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-        events_result = service.events().list(calendarId='primary', timeMin=now,
-                                            maxResults=5  , singleEvents=True,
-                                            orderBy='startTime').execute()
-        events = events_result.get('items', [])
+            # Call the Calendar API
+            now = datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
+            events_result = service.events().list(calendarId='primary', timeMin=now,
+                                                maxResults=5  , singleEvents=True,
+                                                orderBy='startTime').execute()
+            events = events_result.get('items', [])
 
-        if not events:
-            print('No upcoming events found.')
-        for event in events:
-            start = event['start'].get('dateTime', event['start'].get('date'))
-            if len(start) < 18:
-                start_str = datetime.strptime(start[0:19], "%Y-%m-%d")
-            else:   
-                start_str = datetime.strptime(start[0:19], "%Y-%m-%dT%H:%M:%S")
-            self.upcomingEvents = self.upcomingEvents + str(start_str.strftime("%b %d %H:%M")) + " • " + event['summary'] + "\n"
-        
+            if not events:
+                print('No upcoming events found.')
+            for event in events:
+                start = event['start'].get('dateTime', event['start'].get('date'))
+                if len(start) < 18:
+                    start_str = datetime.strptime(start[0:19], "%Y-%m-%d")
+                else:   
+                    start_str = datetime.strptime(start[0:19], "%Y-%m-%dT%H:%M:%S")
+                self.upcomingEvents = self.upcomingEvents + str(start_str.strftime("%b %d %H:%M")) + " • " + event['summary'] + "\n"
+        except:
+            self.weather_error = "There has been an issue connecting to google"
         
 if __name__ == "__main__":
     MyMainApp().run()

@@ -14,7 +14,7 @@
 
 .run-distance-input {
   display: flex;
-  margin-left: 45%;
+  margin-left: 35%;
 }
 
 .add-btn {
@@ -27,7 +27,6 @@
 .minus-btn {
   padding: 0px !important;
   margin-block-start: 0em !important;
-  margin-block-end: 1em !important;
   margin-bottom: 10px;
   padding-right: 10px !important;
 }
@@ -54,4 +53,51 @@
 
 .MuiInputLabel-formControl {
   left: 12px !important;
+}
+
+.stat-tracker {
+  color: white;
+}
+
+.day-buttons {
+  background-color: #f50057;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.days-radio-group {
+  /* margin-left: -50%; */
+  width: 33%;
+}
+
+.stat-central-section {
+  /* margin-top: -50%; */
+  width: 33%;
+  margin-left: 33%;
+  margin-top: -15%;
+}
+
+.icon-selectors {
+  width: 33%;
+  display: table-caption;
+}
+
+.workout-selector {
+  background-color: #f50057;
+  width: 120px;
+  padding: 3px;
+  margin: 2px;
+}
+
+.workout-section {
+  padding: 10px;
+}
+
+.workout-notes {
+  padding: 10px;
+}
+
+.icon-selectors {
+  margin-left: 3000%;
+  margin-top: -340%;
 }

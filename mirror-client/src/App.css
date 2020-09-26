@@ -1,6 +1,6 @@
 .home {
   text-align: center;
-  background-color: #000000;
+  background-color: #222222;
   height: 100vh;
 }
 
@@ -39,11 +39,11 @@ h2 {
 }
 
 .MuiAppBar-colorPrimary {
-  background-color: #000000 !important;
+  background-color: #222222 !important;
 }
 
 .home-title {
   display: inline-block;
-  background-color: black !important;
+  background-color: #222222 !important;
   padding: 5px;
 }

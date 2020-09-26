@@ -1,0 +1,39 @@
+.workout-summary {
+  background-color: white;
+  margin-top: 230px;
+  width: 99%;
+}
+
+.MuiGrid-spacing-xs-2 {
+  margin: 0px;
+  width: 0px;
+}
+
+.meditate {
+  display: inline-flex;
+}
+
+.check-icon {
+  padding-top: 12px;
+}
+
+.title {
+  display: inline-flex;
+  padding-right: 5px;
+}
+
+.title-icon {
+  padding-top: 18px;
+  padding-right: 5px;
+}
+
+.daily-notes {
+  background-color: grey;
+  color: white;
+}
+
+.title-p {
+  padding-right: 15px;
+  padding-left: 15px;
+  font-size: 20px;
+}

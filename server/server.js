@@ -3,6 +3,8 @@ const fs = require("fs");
 const bodyParser = require("body-parser");
 const util = require("util");
 const cors = require("cors");
+var schedule = require("node-schedule");
+const readFileAsync = util.promisify(fs.readFile);
 
 const app = express();
 app.use(cors());
@@ -18,51 +20,59 @@ const PORT = 5001;
 app.listen(PORT, () => console.log("Listening on port 5001"));
 
 app.get("/api/getTodo", (req, res) => {
-  console.log(`> GET TODO`);
+  console.log(`> Requested todo list from /getTodo`);
   fs.readFile("./todo.txt", "utf8", function read(err, data) {
     console.log(`> > Attempting to read file`);
     if (err) {
       throw err;
     }
-    console.log(`> > > Data read from file: ${data}`);
     res.status(200).send(data);
   });
 });
 
 app.post("/api/updateTodo", (req, res) => {
-  console.log(`> POST TODO`);
-  console.log(`>> BODY: ${JSON.stringify(req.body)}`);
+  console.log(`> Updating todo list from /updateTodo`);
   const list = req.body.list;
-  console.log(`> > LIST FROM REQUEST BODY: ${JSON.stringify(list)}`);
   fs.writeFile("./todo.txt", list, function (err) {
     if (err) return console.log(err);
-    console.log(`> > > Writing to file`);
   });
-  // write this to the file
-  res.send("> > > > POST RECEIVED, UPDATE SUCCESSFUL");
+  res.send("Successfully updated todo list.");
 });
 
 app.get("/api/getWorkout", (req, res) => {
-  console.log(`> GET WORKOUT`);
-  fs.readFile("./workout.txt", "utf8", function read(err, data) {
-    console.log(`> > > Attempting to read workout file`);
+  console.log(`> Requested stats from /getWorkout`);
+  fs.readFile("./thisweek.json", "utf8", function read(err, data) {
     if (err) {
       throw err;
     }
-    console.log(`> > > Data read from file ${data}`);
     res.status(200).send(data);
   });
 });
 
-app.post("/api/updateWorkout", (req, res) => {
-  console.log(`> POST TODO`);
-  console.log(`>> BODY: ${JSON.stringify(req.body)}`);
-  const list = req.body.list;
-  console.log(`> > LIST FROM REQUEST BODY: ${JSON.stringify(list)}`);
-  fs.writeFile("./workout.txt", list, function (err) {
-    if (err) return console.log(err);
-    console.log(`> > > Writing to file`);
+app.post("/api/updateWorkout", async (req, res) => {
+  readFileAsync("./thisweek.json", "utf8", function read(err, data) {
+    if (err) {
+      throw err;
+    }
+    console.log(`Data: ${data} type ${typeof data}`);
+    const parsedData = JSON.parse(data);
+    const squash = {
+      ...parsedData,
+      ...req.body,
+    };
+    fs.writeFile("./thisweek.json", JSON.stringify(squash), function (err) {
+      if (err) return console.log(err);
+    });
+    res.send("> > > > POST RECEIVED, UPDATE SUCCESSFUL");
   });
-  // write this to the file
-  res.send("> > > > POST RECEIVED, UPDATE SUCCESSFUL");
+});
+
+const j = schedule.scheduleJob("8 * * *", function () {
+  console.log(`It's 8am, checking day.`);
+  const day = new Date().getDay();
+  if (day === 0) {
+    console.log(
+      `It's Sunday. Transferring this week's logs into lastweek.json and cleaning out this week's.`
+    );
+  }
 });
