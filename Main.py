@@ -25,6 +25,12 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.recycleview import RecycleView
 from kivy.core.window import Window
 from keys import *
+import RPi.GPIO as GPIO
+
+# GPIO stuff 
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(8, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
@@ -135,9 +141,14 @@ class MyMainApp(App):
         Clock.schedule_interval(self.get_covid_data, 7200)
         Clock.schedule_interval(self.check_google_talks, 5)
         Clock.schedule_interval(self.clear_google_cmds, 45)
+        Clock.schedule_interval(self.poll_btn, 1)
         kv = Builder.load_file("main.kv")
         return kv
     
+    def poll_btn(self, *args):
+        if GPIO.input(10) == GPIO.HIGH:
+            print("BUTTON PUSHED!!!")
+            
     def update_clock(self, *args):
         self.time = datetime.now().strftime("%-I:%M %p")
 

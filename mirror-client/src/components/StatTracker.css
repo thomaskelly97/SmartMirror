@@ -57,6 +57,7 @@
 
 .stat-tracker {
   color: white;
+  padding-bottom: 25px;
 }
 
 .day-buttons {
@@ -68,6 +69,7 @@
 .days-radio-group {
   /* margin-left: -50%; */
   width: 33%;
+  margin-bottom: 40px;
 }
 
 .stat-central-section {
@@ -98,6 +100,6 @@
 }
 
 .icon-selectors {
-  margin-left: 3000%;
-  margin-top: -340%;
+  margin-left: 2500%;
+  margin-top: -345%;
 }

@@ -35,21 +35,12 @@ const StatTracker = () => {
 
   // STYLES
   const useStyles = makeStyles((theme) => ({
-    // formControl: {
-    //   margin: theme.spacing(1),
-    //   minWidth: 120,
-    //   backgroundColor: "#F50057",
-    //   padding: 3,
-    // },
-    // selectEmpty: {
-    //   marginTop: theme.spacing(2),
-    // },
     root: {
-      //flexGrow: 1,
+      flex: 0,
     },
     paper: {
       height: 300,
-      width: 200,
+      width: 180,
     },
     control: {
       padding: theme.spacing(2),
@@ -115,14 +106,15 @@ const StatTracker = () => {
       }),
     })
       .then((data) => data.text())
-      .then((info) => console.log(info));
-
-    fetch(getUrl)
-      .then((data) => {
-        return data.json();
-      })
       .then((info) => {
-        setWorkoutInfo(info);
+        console.log(info);
+        fetch(getUrl)
+          .then((data) => {
+            return data.json();
+          })
+          .then((info) => {
+            setWorkoutInfo(info);
+          });
       });
   };
 

@@ -67,11 +67,11 @@ const DisplayStats = ({ info, classes, selDay }) => {
                       <p> • {info[day].workout.note}</p>
                     )}
                   </div>
-                  {/* {info[day] && info[day].dailyNote !== "" && (
+                  {info[day] && info[day].dailyNote !== "" && (
                     <div className="daily-notes">
                       <p>{info[day].dailyNote}</p>
                     </div>
-                  )} */}
+                  )}
                 </Paper>
               </Grid>
             ))}
