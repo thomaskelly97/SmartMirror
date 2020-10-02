@@ -16,8 +16,6 @@ const DAYS = [
   "Sunday",
 ];
 const DisplayStats = ({ info, classes, selDay }) => {
-  console.log(`Info : ${JSON.stringify(info)}`);
-  console.log(`INFO: ${JSON.stringify(info["Monday"])}`);
   return (
     <div className="workout-summary">
       <Grid container className={classes.root} spacing={2}>

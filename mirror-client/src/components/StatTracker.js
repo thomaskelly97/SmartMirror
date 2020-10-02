@@ -207,11 +207,13 @@ const StatTracker = () => {
                 value={workout}
                 onChange={handleWorkoutChange}
               >
-                <MenuItem value={"Chest"}>Chest</MenuItem>
-                <MenuItem value={"Arms"}>Arms</MenuItem>
-                <MenuItem value={"Shoulders"}>Shoulders</MenuItem>
-                <MenuItem value={"Back"}>Back</MenuItem>
-                <MenuItem value={"Abs"}>Abs</MenuItem>
+                <MenuItem value={"Chest & Triceps"}>Chest and Triceps</MenuItem>
+                <MenuItem value={"Shoulders & Biceps"}>
+                  Shoulders and Biceps
+                </MenuItem>
+                <MenuItem value={"Back & Abs"}>Back and Abs</MenuItem>
+                <MenuItem value={"Legs"}>Legs</MenuItem>
+                <MenuItem value={"A rushed workout"}>A rushed workout</MenuItem>
               </Select>
             </FormControl>
           </div>
