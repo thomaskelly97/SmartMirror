@@ -6,6 +6,8 @@ Inspiration was taken from posts like [this](https://www.instructables.com/How-t
 
 The program is set to run under the directory /pi/home/Development/
 
+The mirror-client & server sub-directories run a web page accessible through my home network, running a todo-list and a fitness stat tracker
+
 The Pi is also configured to run Google Assistant functionality, installed at /home/pi, as described in [this article](https://medium.com/@kevalpatel2106/turn-your-raspberry-pi-into-homemade-google-home-9e29ad220075)
 
 Use ./run.sh to run the application, provided it is installed under the correct directory path.
