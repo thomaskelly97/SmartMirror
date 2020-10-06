@@ -1,6 +1,8 @@
 # Smart Mirror Application & Home Web Server
 
-Smart Mirror software designed for raspberry pi utilising a variety of APIs to display news, weather, calendar, todo list & covid-19 information.
+Custom built Smart Mirror software designed for raspberry pi utilising a variety of APIs to display news, weather, calendar, todo list & covid-19 information.
+
+Inspiration was taken from posts like (this)[https://www.instructables.com/How-to-Build-a-Raspberry-Pi-Smart-Mirror/] 
 
 The program is set to run under the directory /pi/home/Development/
 
