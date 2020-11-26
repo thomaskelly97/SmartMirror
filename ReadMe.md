@@ -16,7 +16,7 @@ The Main.py and main.kv are responsible for the handling of the Mirror's display
 'Home Web server' 
 ---
 I decided to incorporate a web server, running Node JS with a ReactJS client on the pi along side the mirror. 
-The `/mirror-client` & `/server` directories run a web page accessible through my home network, hosting a todo-list and a fitness stat tracker
+The `/mirror-client` & `/server` directories run a web page accessible through my home network, hosting a todo-list and a fitness stat tracker.
 The server then communicates this information to the python process, which displays my todo list and fitness stats for each week on the mirror display. 
 
 Google Assistant
